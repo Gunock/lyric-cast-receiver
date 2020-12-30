@@ -1,7 +1,7 @@
 /*
- * Created by Tomasz Kiljańczyk on 12/10/2020, 00:04
+ * Created by Tomasz Kiljańczyk on 30/12/2020, 18:42
  * Copyright (c) 2020 . All rights reserved.
- * Last modified 11/10/2020, 23:53
+ * Last modified 30/12/2020, 18:41
  */
 
 $(document).ready(function () {
@@ -11,6 +11,8 @@ $(document).ready(function () {
     let blanked = false;
     let songText = "";
     let fontSize = 40;
+    let backgroundColor = "black"
+    let fontColor = "white"
 
     /**
      * Cast receiver context as variable
@@ -36,7 +38,6 @@ $(document).ready(function () {
         console.log(`Received content message: ${songText}`)
 
         showText(songText)
-        $("body").css("background-color", "white");
         blanked = false;
     });
 
@@ -48,17 +49,20 @@ $(document).ready(function () {
             case "blank":
                 if (blanked) {
                     showText(songText)
-                    $("body").css("background-color", "white");
+                    $("#song-text").show()
                     blanked = false;
                 } else {
-                    $("body").css("background-color", "black");
-                    $("#song-text").empty();
+                    $("#song-text").hide()
                     blanked = true;
                 }
                 break;
             case "configure":
                 let config = event.data.value;
                 fontSize = config["fontSize"];
+                backgroundColor = config["backgroundColor"]
+                fontColor = config["fontColor"]
+
+                $("body").css({backgroundColor: backgroundColor, color: fontColor})
                 showText(songText)
                 break;
             default:
@@ -67,9 +71,8 @@ $(document).ready(function () {
     });
 
     function showText(text) {
-        let songTextElement = $("#song-text");
-        songTextElement.empty();
-        songTextElement.append(`<p style="font-size: ${fontSize}">${text}</p>`);
+        $("#song-text").empty()
+            .append(`<p style="font-size: ${fontSize}">${text}</p>`);
     }
 
     /**
