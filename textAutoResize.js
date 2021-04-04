@@ -1,7 +1,7 @@
 /*
- * Created by Tomasz Kiljanczyk on 04/04/2021, 20:27
+ * Created by Tomasz Kiljanczyk on 05/04/2021, 00:10
  * Copyright (c) 2021 . All rights reserved.
- * Last modified 04/04/2021, 20:26
+ * Last modified 04/04/2021, 22:16
  */
 
 /* Based on: https://variablefonts.dev/posts/resize-to-fit/ */
@@ -19,9 +19,6 @@ function resizeText() {
     const heightRatio = parentContainerHeight / currentTextHeight;
     const ratio = Math.min(widthRatio, heightRatio);
 
-    console.log(`widthRation: ${widthRatio}; heightRatio ${heightRatio}`);
-    console.log(`currentTextWidth: ${currentTextWidth}; currentTextHeight ${currentTextHeight}`);
-    console.log(`parentContainerWidth: ${parentContainerWidth}; currentTextHeight ${currentTextHeight}`);
     const currentFontSize = parseInt(window.getComputedStyle(text).fontSize);
     let newValue = Math.min(Math.max(16, ratio * currentFontSize), 500);
     newValue = Math.floor(newValue);
@@ -36,7 +33,3 @@ document.addEventListener('DOMContentLoaded', function () {
         resizeText();
     }, false);
 }, false);
-
-
-
-
