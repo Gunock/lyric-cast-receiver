@@ -1,7 +1,7 @@
 /*
- * Created by Tomasz Kiljańczyk on 30/12/2020, 18:42
- * Copyright (c) 2020 . All rights reserved.
- * Last modified 30/12/2020, 17:43
+ * Created by Tomasz Kiljanczyk on 04/04/2021, 20:27
+ * Copyright (c) 2021 . All rights reserved.
+ * Last modified 04/04/2021, 20:26
  */
 
 html,
@@ -15,13 +15,24 @@ body {
 }
 
 .vertical-center {
-    margin: 0;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
 }
 
 .text-container {
-    padding: 5px 5px;
-    font-size: 40px;
+    position: absolute;
+    width: 99%;
+    height: 99%;
+    top: 0.5%;
+    left: 0.5%;
+}
+
+p {
+    --fontSize: 78px;
+
+    white-space: nowrap;
+    overflow: visible;
+    font-size: var(--fontSize) !important;
+    margin: 0;
 }

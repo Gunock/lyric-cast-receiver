@@ -1,18 +1,20 @@
 /*
- * Created by Tomasz Kiljańczyk on 30/12/2020, 18:42
- * Copyright (c) 2020 . All rights reserved.
- * Last modified 30/12/2020, 18:41
+ * Created by Tomasz Kiljanczyk on 04/04/2021, 20:27
+ * Copyright (c) 2021 . All rights reserved.
+ * Last modified 04/04/2021, 20:27
  */
 
-$(document).ready(function () {
+
+document.addEventListener('DOMContentLoaded', onContentLoaded, false);
+
+function onContentLoaded() {
 
     const CONTENT_NAMESPACE = 'urn:x-cast:lyric.cast.content';
     const CONTROL_NAMESPACE = 'urn:x-cast:lyric.cast.control';
     let blanked = false;
     let songText = "";
-    let fontSize = 40;
-    let backgroundColor = "black"
-    let fontColor = "white"
+    let backgroundColor = "black";
+    let fontColor = "white";
 
     /**
      * Cast receiver context as variable
@@ -23,11 +25,13 @@ $(document).ready(function () {
      * Handle disconnect
      */
     window.castReceiverContext.onSenderDisconnected = function (event) {
-        if (window.castReceiverContext.getSenders().length === 0 &&
-            event.reason === system.DisconnectReason.REQUESTED_BY_SENDER) {
+        // noinspection TypeScriptUMDGlobal
+        if (window.castReceiverContext.getSenders().length === 0
+            && event.reason === system.DisconnectReason.REQUESTED_BY_SENDER) {
+
             window.close();
         }
-    }
+    };
 
     /**
      * Control message listener setup
@@ -35,45 +39,46 @@ $(document).ready(function () {
     window.castReceiverContext.addCustomMessageListener(CONTENT_NAMESPACE, function (event) {
         songText = event.data.text;
 
-        console.log(`Received content message: ${songText}`)
+        console.log(`Received content message: ${songText}`);
 
-        showText(songText)
+        setText(songText);
         blanked = false;
     });
 
     window.castReceiverContext.addCustomMessageListener(CONTROL_NAMESPACE, function (event) {
         const action = event.data.action;
-        console.log(`Received control message: ${action}`)
+        console.log(`Received control message: ${action}`);
 
         switch (action.toLowerCase()) {
             case "blank":
                 if (blanked) {
-                    showText(songText)
-                    $("#song-text").show()
+                    setText(songText);
+                    document.getElementById("song-text-container").style.display = "block";
+                    resizeText();
                     blanked = false;
                 } else {
-                    $("#song-text").hide()
+                    document.getElementById("song-text-container").style.display = "none";
                     blanked = true;
                 }
                 break;
             case "configure":
                 let config = event.data.value;
-                fontSize = config["fontSize"];
-                backgroundColor = config["backgroundColor"]
-                fontColor = config["fontColor"]
+                backgroundColor = config["backgroundColor"];
+                fontColor = config["fontColor"];
 
-                $("body").css({backgroundColor: backgroundColor, color: fontColor})
-                showText(songText)
+                document.body.style.backgroundColor = backgroundColor;
+                document.body.style.color = fontColor;
+                setText(songText);
                 break;
             default:
-                showText("ERROR: UNKNOWN MESSAGE")
+                setText("ERROR: UNKNOWN MESSAGE");
         }
     });
 
-    function showText(text) {
-        $("#song-text").empty()
-            .append(`<p style="font-size: ${fontSize}">${text}</p>`);
+    function setText(text) {
+        document.getElementById("song-text").innerHTML = text;
     }
+
 
     /**
      * Initializes the system manager. The application should call this method when
@@ -81,8 +86,8 @@ $(document).ready(function () {
      * to listen for the events it is interested on.
      */
     window.castReceiverContext.start({
-        maxInactivity: 6000,
+        maxInactivity: 300, // In seconds
         statusText: "Ready to present"
     });
 
-});
+}
