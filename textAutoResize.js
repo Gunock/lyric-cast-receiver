@@ -1,7 +1,7 @@
 /*
- * Created by Tomasz Kiljanczyk on 05/04/2021, 00:10
+ * Created by Tomasz Kiljanczyk on 11/04/2021, 20:02
  * Copyright (c) 2021 . All rights reserved.
- * Last modified 04/04/2021, 22:16
+ * Last modified 11/04/2021, 20:01
  */
 
 /* Based on: https://variablefonts.dev/posts/resize-to-fit/ */
@@ -20,7 +20,7 @@ function resizeText() {
     const ratio = Math.min(widthRatio, heightRatio);
 
     const currentFontSize = parseInt(window.getComputedStyle(text).fontSize);
-    let newValue = Math.min(Math.max(16, ratio * currentFontSize), 500);
+    let newValue = Math.min(Math.max(16, ratio * currentFontSize), 100);
     newValue = Math.floor(newValue);
 
     text.style.setProperty('--fontSize', newValue + 'px');

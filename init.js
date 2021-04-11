@@ -1,7 +1,7 @@
 /*
- * Created by Tomasz Kiljanczyk on 04/04/2021, 20:27
+ * Created by Tomasz Kiljanczyk on 11/04/2021, 20:02
  * Copyright (c) 2021 . All rights reserved.
- * Last modified 04/04/2021, 20:27
+ * Last modified 11/04/2021, 20:01
  */
 
 
@@ -19,14 +19,14 @@ function onContentLoaded() {
     /**
      * Cast receiver context as variable
      */
-    window.castReceiverContext = cast.framework.CastReceiverContext.getInstance();
+    const castReceiverContext = cast.framework.CastReceiverContext.getInstance();
 
     /**
      * Handle disconnect
      */
-    window.castReceiverContext.onSenderDisconnected = function (event) {
+    castReceiverContext.onSenderDisconnected = function (event) {
         // noinspection TypeScriptUMDGlobal
-        if (window.castReceiverContext.getSenders().length === 0
+        if (castReceiverContext.getSenders().length === 0
             && event.reason === system.DisconnectReason.REQUESTED_BY_SENDER) {
 
             window.close();
@@ -36,7 +36,7 @@ function onContentLoaded() {
     /**
      * Control message listener setup
      */
-    window.castReceiverContext.addCustomMessageListener(CONTENT_NAMESPACE, function (event) {
+    castReceiverContext.addCustomMessageListener(CONTENT_NAMESPACE, function (event) {
         songText = event.data.text;
 
         console.log(`Received content message: ${songText}`);
@@ -45,23 +45,20 @@ function onContentLoaded() {
         blanked = false;
     });
 
-    window.castReceiverContext.addCustomMessageListener(CONTROL_NAMESPACE, function (event) {
+    castReceiverContext.addCustomMessageListener(CONTROL_NAMESPACE, function (event) {
         const action = event.data.action;
         console.log(`Received control message: ${action}`);
+        console.log(`Control value: ${event.data.value}`);
 
-        switch (action.toLowerCase()) {
-            case "blank":
-                if (blanked) {
-                    setText(songText);
-                    document.getElementById("song-text-container").style.display = "block";
-                    resizeText();
-                    blanked = false;
-                } else {
-                    document.getElementById("song-text-container").style.display = "none";
-                    blanked = true;
+        switch (action.toUpperCase()) {
+            case "BLANK":
+                let blankState = event.data.value.toLowerCase() === "true";
+                document.getElementById("song-text-container").hidden = blankState;
+                if (!blankState) {
+                    resizeText()
                 }
                 break;
-            case "configure":
+            case "CONFIGURE":
                 let config = event.data.value;
                 backgroundColor = config["backgroundColor"];
                 fontColor = config["fontColor"];
@@ -85,8 +82,8 @@ function onContentLoaded() {
      * it is ready to start receiving messages, typically after registering
      * to listen for the events it is interested on.
      */
-    window.castReceiverContext.start({
-        maxInactivity: 300, // In seconds
+    castReceiverContext.start({
+        disableIdleTimeout: true,
         statusText: "Ready to present"
     });
 
