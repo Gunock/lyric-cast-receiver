@@ -1,7 +1,7 @@
 /*
- * Created by Tomasz Kiljanczyk on 11/04/2021, 20:02
+ * Created by Tomasz Kiljanczyk on 11/04/2021, 22:02
  * Copyright (c) 2021 . All rights reserved.
- * Last modified 11/04/2021, 20:01
+ * Last modified 11/04/2021, 22:01
  */
 
 
@@ -11,10 +11,10 @@ function onContentLoaded() {
 
     const CONTENT_NAMESPACE = 'urn:x-cast:lyric.cast.content';
     const CONTROL_NAMESPACE = 'urn:x-cast:lyric.cast.control';
-    let blanked = false;
     let songText = "";
     let backgroundColor = "black";
     let fontColor = "white";
+    window.maxFontSize = 100;
 
     /**
      * Cast receiver context as variable
@@ -42,7 +42,6 @@ function onContentLoaded() {
         console.log(`Received content message: ${songText}`);
 
         setText(songText);
-        blanked = false;
     });
 
     castReceiverContext.addCustomMessageListener(CONTROL_NAMESPACE, function (event) {
@@ -52,7 +51,7 @@ function onContentLoaded() {
 
         switch (action.toUpperCase()) {
             case "BLANK":
-                let blankState = event.data.value.toLowerCase() === "true";
+                let blankState = event.data.value;
                 document.getElementById("song-text-container").hidden = blankState;
                 if (!blankState) {
                     resizeText()
@@ -62,10 +61,11 @@ function onContentLoaded() {
                 let config = event.data.value;
                 backgroundColor = config["backgroundColor"];
                 fontColor = config["fontColor"];
+                window.maxFontSize = config["maxFontSize"];
 
                 document.body.style.backgroundColor = backgroundColor;
                 document.body.style.color = fontColor;
-                setText(songText);
+                resizeText();
                 break;
             default:
                 setText("ERROR: UNKNOWN MESSAGE");
