@@ -1,12 +1,11 @@
 /*
- * Created by Tomasz Kiljanczyk on 11/04/2021, 22:02
- * Copyright (c) 2021 . All rights reserved.
- * Last modified 11/04/2021, 22:01
+ * Created by Tomasz Kiljanczyk on 23/11/2024, 16:49
+ * Copyright (c) 2024 . All rights reserved.
+ * Last modified 23/11/2024, 16:45
  */
 
 /* Based on: https://variablefonts.dev/posts/resize-to-fit/ */
 let text;
-
 
 function resizeText() {
     const parentContainerWidth = text.parentNode.clientWidth;
