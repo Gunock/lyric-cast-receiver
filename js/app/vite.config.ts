@@ -20,7 +20,7 @@ export default defineConfig({
                 'chromecast-caf-receiver/cast.framework.messages',
                 'chromecast-caf-receiver/cast.framework.events',
                 'chromecast-caf-receiver/cast.framework.system',
-                'chromecast-caf-receiver/cast.debug',
+                'chromecast-caf-receiver/cast.debug'
             ],
             output: {
                 entryFileNames: 'js/script.[hash].js',
