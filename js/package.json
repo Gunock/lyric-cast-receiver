@@ -1,0 +1,25 @@
+{
+    "homepage": "https://thomas-kiljanczyk.dev/",
+    "name": "lyriccast-receiver",
+    "type": "module",
+    "private": true,
+    "workspaces": {
+        "packages": [
+            "iac",
+            "eslint-config"
+        ]
+    },
+    "scripts": {
+        "lint": "eslint . --cache --cache-strategy content --cache-location .cache/.eslintcache",
+        "format": "prettier --config prettier.config.js  --write .",
+        "prepare": "cd .. && husky ./js/.husky"
+    },
+    "devDependencies": {
+        "@lyriccast-receiver/eslint-config": "workspace:*",
+        "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+        "eslint": "^9.13.0",
+        "husky": "^9.1.6",
+        "prettier": "^3.3.3"
+    },
+    "packageManager": "yarn@4.5.1"
+}
