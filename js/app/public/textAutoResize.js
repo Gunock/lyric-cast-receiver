@@ -5,9 +5,10 @@
  */
 
 /* Based on: https://variablefonts.dev/posts/resize-to-fit/ */
-let text;
 
 function resizeText() {
+    const text = document.getElementById('song-text');
+
     const parentContainerWidth = text.parentNode.clientWidth;
     const currentTextWidth = text.scrollWidth;
 
@@ -22,21 +23,14 @@ function resizeText() {
     let newValue = Math.min(Math.max(16, ratio * currentFontSize), window.maxFontSize);
     newValue = Math.floor(newValue);
 
-    text.style.setProperty('--fontSize', newValue + 'px');
+    text.style.setProperty('--fontSize', `${newValue}px`);
 }
 
 document.addEventListener(
     'DOMContentLoaded',
-    function () {
-        text = document.getElementById('song-text');
-
-        text.addEventListener(
-            'DOMSubtreeModified',
-            function () {
-                resizeText();
-            },
-            false
-        );
+    () => {
+        const text = document.getElementById('song-text');
+        text.addEventListener('DOMSubtreeModified', resizeText, false);
     },
     false
 );
