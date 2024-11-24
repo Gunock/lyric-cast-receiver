@@ -25,10 +25,18 @@ function resizeText() {
     text.style.setProperty('--fontSize', newValue + 'px');
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    text = document.getElementById("song-text");
+document.addEventListener(
+    'DOMContentLoaded',
+    function () {
+        text = document.getElementById('song-text');
 
-    text.addEventListener('DOMSubtreeModified', function () {
-        resizeText();
-    }, false);
-}, false);
+        text.addEventListener(
+            'DOMSubtreeModified',
+            function () {
+                resizeText();
+            },
+            false
+        );
+    },
+    false
+);

@@ -4,16 +4,14 @@
  * Last modified 11/04/2021, 22:01
  */
 
-
 document.addEventListener('DOMContentLoaded', onContentLoaded, false);
 
 function onContentLoaded() {
-
     const CONTENT_NAMESPACE = 'urn:x-cast:lyric.cast.content';
     const CONTROL_NAMESPACE = 'urn:x-cast:lyric.cast.control';
-    let songText = "";
-    let backgroundColor = "black";
-    let fontColor = "white";
+    let songText = '';
+    let backgroundColor = 'black';
+    let fontColor = 'white';
     window.maxFontSize = 100;
 
     /**
@@ -26,9 +24,10 @@ function onContentLoaded() {
      */
     castReceiverContext.onSenderDisconnected = function (event) {
         // noinspection TypeScriptUMDGlobal
-        if (castReceiverContext.getSenders().length === 0
-            && event.reason === system.DisconnectReason.REQUESTED_BY_SENDER) {
-
+        if (
+            castReceiverContext.getSenders().length === 0 &&
+            event.reason === system.DisconnectReason.REQUESTED_BY_SENDER
+        ) {
             window.close();
         }
     };
@@ -50,32 +49,31 @@ function onContentLoaded() {
         console.log(`Control value: ${event.data.value}`);
 
         switch (action.toUpperCase()) {
-            case "BLANK":
-                let blankState = event.data.value;
-                document.getElementById("song-text-container").hidden = blankState;
+            case 'BLANK':
+                // const blankState = event.data.value;
+                document.getElementById('song-text-container').hidden = event.data.value;
                 if (!blankState) {
-                    resizeText()
+                    resizeText();
                 }
                 break;
-            case "CONFIGURE":
-                let config = event.data.value;
-                backgroundColor = config["backgroundColor"];
-                fontColor = config["fontColor"];
-                window.maxFontSize = config["maxFontSize"];
+            case 'CONFIGURE':
+                const config = event.data.value;
+                backgroundColor = config['backgroundColor'];
+                fontColor = config['fontColor'];
+                window.maxFontSize = config['maxFontSize'];
 
                 document.body.style.backgroundColor = backgroundColor;
                 document.body.style.color = fontColor;
                 resizeText();
                 break;
             default:
-                setText("ERROR: UNKNOWN MESSAGE");
+                setText('ERROR: UNKNOWN MESSAGE');
         }
     });
 
     function setText(text) {
-        document.getElementById("song-text").innerHTML = text;
+        document.getElementById('song-text').innerHTML = text;
     }
-
 
     /**
      * Initializes the system manager. The application should call this method when
@@ -84,7 +82,6 @@ function onContentLoaded() {
      */
     castReceiverContext.start({
         disableIdleTimeout: true,
-        statusText: "Ready to present"
+        statusText: 'Ready to present'
     });
-
 }
