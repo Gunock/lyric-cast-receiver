@@ -1,0 +1,38 @@
+{
+    "name": "@lyriccast-receiver/app",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "check-types": "tsc --noEmit",
+        "dev": "vite --config vite.config.ts dev",
+        "build:development": "vite --config vite.config.development.ts build",
+        "build": "vite build"
+    },
+    "dependencies": {
+        "zod": "^3.23.8"
+    },
+    "devDependencies": {
+        "@types/chromecast-caf-receiver": "^6.0.19",
+        "typescript": "<5.7",
+        "vite": "^5.4.10",
+        "vite-tsconfig-paths": "^5.1.3"
+    },
+    "browserslist": {
+        "production": [
+            ">0.3%",
+            "not ie 11",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            ">0.3%",
+            "not ie 11",
+            "not dead",
+            "not op_mini all",
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
+}

@@ -11,7 +11,6 @@ export default tseslint.config(...tsEslintConfig, {
         '**/.cache/',
         '**/cdk.out/',
         '**/prettier.config.js',
-        '**/eslint.config.js',
-        'app/**'
+        '**/eslint.config.js'
     ]
 });

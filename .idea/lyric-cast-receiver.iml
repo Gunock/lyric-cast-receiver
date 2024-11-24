@@ -10,5 +10,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="cast_receiver_framework" level="application" />
     <orderEntry type="library" name="@types/chromecast-caf-receiver" level="application" />
+    <orderEntry type="library" name="cast_receiver_framework" level="application" />
   </component>
 </module>
