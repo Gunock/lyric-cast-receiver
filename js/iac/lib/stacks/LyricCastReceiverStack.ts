@@ -31,11 +31,12 @@ export default class LyricCastReceiverStack extends cdk.Stack {
         };
 
         const s3Bucket = new s3.Bucket(this, 's3-bucket', {
-            bucketName: `lyriccast-receiver`,
+            bucketName: `lyriccast-receiver-${props.deploymentEnvironment}`,
             blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
             accessControl: s3.BucketAccessControl.PRIVATE,
             removalPolicy: cdk.RemovalPolicy.DESTROY,
-            cors: [s3CorsRule]
+            cors: [s3CorsRule],
+            enforceSSL: true
         });
 
         const viewerRequestFunction = new cloudFront.Function(this, 'viewer-request-function', {
